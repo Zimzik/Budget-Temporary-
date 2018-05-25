@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Budget</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="member_list">Member list</string>
+    <string name="revenues">Revenues</string>
+    <string name="divergence">Divergence</string>
+    <string name="_8942">⋮</string>
+    <string name="delete">Delete</string>
+    <string name="new_member">New Member</string>
+    <string name="search">Search</string>
+</resources>
