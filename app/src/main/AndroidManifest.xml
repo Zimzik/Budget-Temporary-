@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.zimzik.budget">
 
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,6 +23,8 @@
         <activity android:name=".Fragments.MemberListFragment" />
         <activity android:name=".Activities.NewChorusMember" />
         <activity android:name=".Activities.CurrentMember" />
+        <activity android:name=".Activities.EditChorusMember" />
+        <activity android:name=".Activities.AddNewMembershipFree"></activity>
     </application>
 
 </manifest>

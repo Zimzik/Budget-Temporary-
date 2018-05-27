@@ -1,6 +1,6 @@
 package com.example.zimzik.budget.Activities;
 
-import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.EditText;
@@ -9,38 +9,38 @@ import android.widget.Toast;
 
 import com.example.zimzik.budget.Database.AppDB;
 import com.example.zimzik.budget.Database.Member;
-import com.example.zimzik.budget.R;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
+import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import com.example.zimzik.budget.R;
 
-public class NewChorusMember extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
-    private TextView mTvBirthday;
-    public static final String DATEPICKER_TAG = "datepicker";
-    private Date mBirthday;
-    private AppDB mDB;
+public class EditChorusMember extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+
     private EditText mEtFirstName, mEtSecondName, mEtPhoneNumber;
+    private TextView mTvBirthday;
+    private Member mMember;
+    private AppDB mDB;
+    private Date mBirthday;
+    public static final String DATEPICKER_TAG = "datepicker";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_chorus_member);
-        Context that = this;
-        //Init EditTexts
-        mEtFirstName = findViewById(R.id.et_first_name);
-        mEtSecondName = findViewById(R.id.et_second_name);
-        mEtPhoneNumber = findViewById(R.id.et_phone_number);
-
-        //Init DB
-        mDB = AppDB.getsInstance(this);
+        setContentView(R.layout.activity_edit_chorus_member);
 
         if (getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setTitle("New member");
+            getSupportActionBar().setTitle("Edit member");
         }
+        mDB = AppDB.getsInstance(this);
+        mEtFirstName = findViewById(R.id.et_em_first_name);
+        mEtSecondName = findViewById(R.id.et_em_second_name);
+        mEtPhoneNumber = findViewById(R.id.et_em_phone_number);
+        mTvBirthday = findViewById(R.id.tv_em_birthday);
 
         final Calendar calendar = Calendar.getInstance();
         final DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), isVibrate());
@@ -53,7 +53,6 @@ public class NewChorusMember extends AppCompatActivity implements DatePickerDial
             }
         }
 
-        mTvBirthday = findViewById(R.id.tv_birthday);
         mTvBirthday.setOnClickListener(v -> {
             datePickerDialog.setVibrate(isVibrate());
             datePickerDialog.setYearRange(1985, 2028);
@@ -61,60 +60,63 @@ public class NewChorusMember extends AppCompatActivity implements DatePickerDial
             datePickerDialog.show(getSupportFragmentManager(), DATEPICKER_TAG);
         });
 
-        // Save button implementation
-        findViewById(R.id.save_new_member_btn).setOnClickListener(v -> {
+        Gson gson = new Gson();
+        mMember = gson.fromJson(getIntent().getStringExtra("member"), Member.class);
+        mBirthday = new Date(mMember.getBirthday());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyy");
+        mTvBirthday.setText(sdf.format(mBirthday));
+        mEtFirstName.setText(mMember.getFirstName());
+        mEtSecondName.setText(mMember.getLastName());
+        mEtPhoneNumber.setText(String.valueOf(mMember.getPhoneNumber()));
+
+        findViewById(R.id.save_changes_em_btn).setOnClickListener(v -> {
             String firstName = mEtFirstName.getText().toString();
             String secondName = mEtSecondName.getText().toString();
-            String stringBirthday = mTvBirthday.getText().toString();
-            String strintPhoneNumber = mEtPhoneNumber.getText().toString();
+            String stringPhoneNumber = mEtPhoneNumber.getText().toString();
             mEtFirstName.setError(null);
             mEtSecondName.setError(null);
-            mTvBirthday.setError(null);
             mEtPhoneNumber.setError(null);
 
-            if (firstName.isEmpty() || secondName.isEmpty() || stringBirthday.equals("Birthday") || strintPhoneNumber.isEmpty()) {
+            if (firstName.isEmpty() || secondName.isEmpty() || stringPhoneNumber.isEmpty()) {
                 if (firstName.isEmpty()) {
                     mEtFirstName.setError("This field is empty!");
                 }
                 if (secondName.isEmpty()) {
                     mEtSecondName.setError("This field is empty!");
                 }
-                if (stringBirthday.equals("Birthday")) {
-                    mTvBirthday.setError("This field is empty");
-                }
-                if (strintPhoneNumber.isEmpty()) {
+                if (stringPhoneNumber.isEmpty()) {
                     mEtPhoneNumber.setError("This field is empty");
                 }
             } else {
-                //Create new thread to save data on DB
-                Thread insert = new Thread(() -> mDB.memberDao().insertAll(new Member(firstName, secondName, mBirthday.getTime(), Long.valueOf(strintPhoneNumber))));
-                insert.start();
+                mMember.setFirstName(firstName);
+                mMember.setLastName(secondName);
+                mMember.setPhoneNumber(Long.valueOf(stringPhoneNumber));
+                mMember.setBirthday(mBirthday.getTime());
+                Thread applyChanges = new Thread(() -> {
+                    mDB.memberDao().update(mMember);
+                });
+                applyChanges.start();
                 try {
-                    insert.join();
+                    applyChanges.join();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
-                //Successfully data saved message
-                Toast.makeText(that, "New member succesfully saved on DB", Toast.LENGTH_LONG).show();
-
-                // Clear all fileds and errors
-                mEtFirstName.setError(null);
-                mEtSecondName.setError(null);
-                mTvBirthday.setError(null);
-                mEtPhoneNumber.setError(null);
-                mEtFirstName.setText("");
-                mEtSecondName.setText("");
-                mTvBirthday.setText(R.string.birthday);
-                mEtPhoneNumber.setText("");
+                Intent intent = new Intent();
+                String newMember = gson.toJson(mMember);
+                intent.putExtra("mMember", newMember);
+                setResult(RESULT_OK, intent);
+                Toast.makeText(this, "Information has successfully updated!", Toast.LENGTH_LONG).show();
+                finish();
             }
+
         });
     }
 
-    private boolean isVibrate() {
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
         return true;
     }
-
 
     @Override
     public void onDateSet(DatePickerDialog datePickerDialog, int year, int month, int day) {
@@ -124,9 +126,7 @@ public class NewChorusMember extends AppCompatActivity implements DatePickerDial
         mTvBirthday.setText(new SimpleDateFormat("dd/MM/yyy").format(mBirthday));
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
+    private boolean isVibrate() {
         return true;
     }
 }

@@ -3,10 +3,11 @@ package com.example.zimzik.budget.Fragments;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -37,9 +38,8 @@ import java.util.concurrent.Future;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class MemberListFragment extends android.support.v4.app.Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-
+public class MemberListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private MemberListAdapter mMemberListAdapter;
     private RecyclerView mRecyclerView;
@@ -49,11 +49,11 @@ public class MemberListFragment extends android.support.v4.app.Fragment implemen
     public MemberListFragment() {
     }
 
-    public static MemberListFragment newInstance() {
-        
+    public static com.example.zimzik.budget.Fragments.MemberListFragment newInstance() {
+
         Bundle args = new Bundle();
-        
-        MemberListFragment fragment = new MemberListFragment();
+
+        com.example.zimzik.budget.Fragments.MemberListFragment fragment = new com.example.zimzik.budget.Fragments.MemberListFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -74,7 +74,7 @@ public class MemberListFragment extends android.support.v4.app.Fragment implemen
         mRecyclerView = view.findViewById(R.id.rv_members);
         mMemberListAdapter = refreshList();
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return view;
     }
 
 
@@ -140,7 +140,7 @@ public class MemberListFragment extends android.support.v4.app.Fragment implemen
             mDB.getMemberRepo().delete(m)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe();
+                    .subscribe(this::refreshList);
         });
         builder.setNegativeButton("Cancel", (dialogInterface, i) -> {
 

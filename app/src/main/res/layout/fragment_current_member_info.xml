@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".Activities.CurrentMember">
+
+    <!--Member avatar-->
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_round_account_button_with_user_inside" />
+
+    <!--Fist name and last name-->
+    <TextView
+        android:id="@+id/cm_tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:textSize="25sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="30dp"
+        android:padding="10dp"
+        android:divider="?android:dividerHorizontal"
+        android:showDividers="middle">
+
+        <!--Date of birth and age-->
+        <TextView
+            android:id="@+id/cm_tv_age"
+            style="@style/currentMember"
+            android:paddingBottom="10dp"
+            android:drawableStart="@drawable/ic_date_range_black_24dp" />
+
+        <!--Phone number-->
+        <TextView
+            android:id="@+id/cm_tv_phone_number"
+            style="@style/currentMember"
+            android:layout_marginTop="10dp"
+            android:paddingBottom="10dp"
+            android:drawableStart="@drawable/ic_local_phone_black_24dp" />
+
+        <!--Cash-->
+        <TextView
+            android:id="@+id/cm_tv_cash"
+            style="@style/currentMember"
+            android:layout_marginTop="10dp"
+            android:drawableStart="@drawable/ic_monetization_on_black_24dp" />
+
+    </LinearLayout>
+
+</LinearLayout>
