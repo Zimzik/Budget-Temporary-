@@ -25,4 +25,5 @@
     <string name="money">Money</string>
     <string name="plus_money">+ money</string>
     <string name="title_activity_edit_current_member">EditCurrentMember</string>
+    <string name="member_avatar">Member avatar</string>
 </resources>
