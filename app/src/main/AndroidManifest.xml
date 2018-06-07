@@ -24,7 +24,6 @@
         <activity android:name=".Activities.NewChorusMember" />
         <activity android:name=".Activities.CurrentMember" />
         <activity android:name=".Activities.EditChorusMember" />
-        <activity android:name=".Activities.AddNewMembershipFree"></activity>
     </application>
 
 </manifest>
