@@ -1,4 +1,4 @@
-package com.example.zimzik.budget.Database;
+package com.example.zimzik.budget.data.db.dao;
 
 
 import android.arch.persistence.room.Dao;
@@ -7,9 +7,9 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import java.util.List;
+import com.example.zimzik.budget.data.db.models.Member;
 
-import io.reactivex.Single;
+import java.util.List;
 
 @Dao
 public interface MemberDao {

@@ -1,4 +1,4 @@
-package com.example.zimzik.budget.Activities;
+package com.example.zimzik.budget.activities;
 
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
@@ -10,11 +10,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.zimzik.budget.Adapters.ViewPagerAdapter;
-import com.example.zimzik.budget.Database.AppDB;
-import com.example.zimzik.budget.Database.Member;
-import com.example.zimzik.budget.Fragments.CurrentMemberFinInfoFragment;
-import com.example.zimzik.budget.Fragments.CurrentMemberInfoFragment;
+import com.example.zimzik.budget.adapters.ViewPagerAdapter;
+import com.example.zimzik.budget.data.db.AppDB;
+import com.example.zimzik.budget.data.db.models.Member;
+import com.example.zimzik.budget.fragments.CurrentMemberFinInfoFragment;
+import com.example.zimzik.budget.fragments.CurrentMemberInfoFragment;
 import com.example.zimzik.budget.R;
 import com.google.gson.Gson;
 

@@ -1,4 +1,4 @@
-package com.example.zimzik.budget.Fragments;
+package com.example.zimzik.budget.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -18,11 +18,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
 
-import com.example.zimzik.budget.Activities.CurrentMember;
-import com.example.zimzik.budget.Activities.NewChorusMember;
-import com.example.zimzik.budget.Adapters.MemberListAdapter;
-import com.example.zimzik.budget.Database.AppDB;
-import com.example.zimzik.budget.Database.Member;
+import com.example.zimzik.budget.activities.CurrentMember;
+import com.example.zimzik.budget.activities.NewChorusMember;
+import com.example.zimzik.budget.adapters.MemberListAdapter;
+import com.example.zimzik.budget.data.db.AppDB;
+import com.example.zimzik.budget.data.db.models.Member;
 import com.example.zimzik.budget.R;
 import com.google.gson.Gson;
 
@@ -49,11 +49,11 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
     public MemberListFragment() {
     }
 
-    public static com.example.zimzik.budget.Fragments.MemberListFragment newInstance() {
+    public static com.example.zimzik.budget.fragments.MemberListFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        com.example.zimzik.budget.Fragments.MemberListFragment fragment = new com.example.zimzik.budget.Fragments.MemberListFragment();
+        com.example.zimzik.budget.fragments.MemberListFragment fragment = new com.example.zimzik.budget.fragments.MemberListFragment();
         fragment.setArguments(args);
         return fragment;
     }

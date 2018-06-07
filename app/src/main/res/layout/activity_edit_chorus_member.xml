@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_marginEnd="16dp"
     android:layout_marginStart="16dp"
-    tools:context="com.example.zimzik.budget.Activities.NewChorusMember">
+    tools:context="com.example.zimzik.budget.activities.NewChorusMember">
 
 
     <!--First name field-->

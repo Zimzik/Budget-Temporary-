@@ -1,4 +1,4 @@
-package com.example.zimzik.budget.Database;
+package com.example.zimzik.budget.data.db.models;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;

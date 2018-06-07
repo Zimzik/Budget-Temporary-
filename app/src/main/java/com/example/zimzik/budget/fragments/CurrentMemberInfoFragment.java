@@ -1,4 +1,4 @@
-package com.example.zimzik.budget.Fragments;
+package com.example.zimzik.budget.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.zimzik.budget.Database.Member;
+import com.example.zimzik.budget.data.db.models.Member;
 import com.example.zimzik.budget.R;
 import com.google.gson.Gson;
 

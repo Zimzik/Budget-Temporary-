@@ -1,9 +1,16 @@
-package com.example.zimzik.budget.Database;
+package com.example.zimzik.budget.data.db;
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
+
+import com.example.zimzik.budget.data.db.models.Member;
+import com.example.zimzik.budget.data.db.dao.MemberDao;
+import com.example.zimzik.budget.data.db.repo.MemberRepo;
+import com.example.zimzik.budget.data.db.models.Period;
+import com.example.zimzik.budget.data.db.dao.PeriodDao;
+import com.example.zimzik.budget.data.db.repo.PeriodRepo;
 
 @Database(entities = {Member.class, Period.class}, version = 1, exportSchema = false)
 public abstract class AppDB extends RoomDatabase {

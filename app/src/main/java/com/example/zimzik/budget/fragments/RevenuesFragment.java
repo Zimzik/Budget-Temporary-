@@ -1,4 +1,4 @@
-package com.example.zimzik.budget.Fragments;
+package com.example.zimzik.budget.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

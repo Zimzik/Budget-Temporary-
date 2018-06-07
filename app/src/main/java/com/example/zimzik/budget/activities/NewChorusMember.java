@@ -1,4 +1,4 @@
-package com.example.zimzik.budget.Activities;
+package com.example.zimzik.budget.activities;
 
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
@@ -7,8 +7,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.zimzik.budget.Database.AppDB;
-import com.example.zimzik.budget.Database.Member;
+import com.example.zimzik.budget.data.db.AppDB;
+import com.example.zimzik.budget.data.db.models.Member;
 import com.example.zimzik.budget.R;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
 

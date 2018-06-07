@@ -1,4 +1,4 @@
-package com.example.zimzik.budget.Adapters;
+package com.example.zimzik.budget.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.zimzik.budget.Database.Period;
-import com.example.zimzik.budget.Enums.Months;
+import com.example.zimzik.budget.data.db.models.Period;
+import com.example.zimzik.budget.enums.Months;
 
 import java.util.List;
 

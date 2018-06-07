@@ -1,4 +1,4 @@
-package com.example.zimzik.budget.Adapters;
+package com.example.zimzik.budget.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

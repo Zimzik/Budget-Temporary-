@@ -1,4 +1,7 @@
-package com.example.zimzik.budget.Database;
+package com.example.zimzik.budget.data.db.repo;
+
+import com.example.zimzik.budget.data.db.dao.PeriodDao;
+import com.example.zimzik.budget.data.db.models.Period;
 
 import java.util.List;
 
@@ -8,7 +11,7 @@ import io.reactivex.Single;
 public class PeriodRepo {
     private final PeriodDao mPeriodDao;
 
-    PeriodRepo(PeriodDao mPeriodDao) {
+    public PeriodRepo(PeriodDao mPeriodDao) {
         this.mPeriodDao = mPeriodDao;
     }
 

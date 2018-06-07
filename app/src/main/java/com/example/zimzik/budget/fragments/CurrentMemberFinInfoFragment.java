@@ -1,4 +1,4 @@
-package com.example.zimzik.budget.Fragments;
+package com.example.zimzik.budget.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -16,10 +16,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.example.zimzik.budget.Adapters.FinancialListAdapter;
-import com.example.zimzik.budget.Database.AppDB;
-import com.example.zimzik.budget.Database.Member;
-import com.example.zimzik.budget.Database.Period;
+import com.example.zimzik.budget.adapters.FinancialListAdapter;
+import com.example.zimzik.budget.data.db.AppDB;
+import com.example.zimzik.budget.data.db.models.Member;
+import com.example.zimzik.budget.data.db.models.Period;
 import com.google.gson.Gson;
 
 import java.util.Collections;

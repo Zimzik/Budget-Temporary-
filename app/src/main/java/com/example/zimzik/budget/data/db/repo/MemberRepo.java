@@ -1,14 +1,14 @@
-package com.example.zimzik.budget.Database;
+package com.example.zimzik.budget.data.db.repo;
 
-import java.util.List;
+import com.example.zimzik.budget.data.db.dao.MemberDao;
+import com.example.zimzik.budget.data.db.models.Member;
 
 import io.reactivex.Completable;
-import io.reactivex.Single;
 
 public class MemberRepo {
     private final MemberDao mMemberDao;
 
-    MemberRepo(MemberDao memberDao) {this.mMemberDao = memberDao;}
+    public MemberRepo(MemberDao memberDao) {this.mMemberDao = memberDao;}
 
     public Completable insertAll(Member member) {
         return Completable.fromAction(() -> mMemberDao.insertAll(member));

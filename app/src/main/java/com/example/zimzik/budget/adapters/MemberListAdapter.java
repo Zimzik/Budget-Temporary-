@@ -1,4 +1,4 @@
-package com.example.zimzik.budget.Adapters;
+package com.example.zimzik.budget.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.ContextMenu;
@@ -10,8 +10,8 @@ import android.widget.Filterable;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
-import com.example.zimzik.budget.Database.Member;
-import com.example.zimzik.budget.Fragments.MemberListFragment;
+import com.example.zimzik.budget.data.db.models.Member;
+import com.example.zimzik.budget.fragments.MemberListFragment;
 import com.example.zimzik.budget.R;
 
 import java.util.ArrayList;

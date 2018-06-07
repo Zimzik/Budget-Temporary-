@@ -1,4 +1,4 @@
-package com.example.zimzik.budget.Activities;
+package com.example.zimzik.budget.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
@@ -6,10 +6,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
-import com.example.zimzik.budget.Fragments.DivergenceFragment;
-import com.example.zimzik.budget.Fragments.HomeFragment;
-import com.example.zimzik.budget.Fragments.MemberListFragment;
-import com.example.zimzik.budget.Fragments.RevenuesFragment;
+import com.example.zimzik.budget.fragments.DivergenceFragment;
+import com.example.zimzik.budget.fragments.HomeFragment;
+import com.example.zimzik.budget.fragments.MemberListFragment;
+import com.example.zimzik.budget.fragments.RevenuesFragment;
 import com.example.zimzik.budget.R;
 
 public class MainActivity extends AppCompatActivity {
