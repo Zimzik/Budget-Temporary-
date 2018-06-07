@@ -67,13 +67,13 @@ public class CurrentMemberFinInfoFragment extends Fragment {
         mDB = AppDB.getsInstance(getContext());
         mRecyclerView = view.findViewById(R.id.rv_periods);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
-        refreshTable(mRecyclerView);
+        refreshTable();
         return view;
     }
 
     @Override
     public void onResume() {
-        refreshTable(mRecyclerView);
+        refreshTable();
         super.onResume();
     }
 
@@ -84,28 +84,6 @@ public class CurrentMemberFinInfoFragment extends Fragment {
         bundle.putString(KEY_MEMBER, gson.toJson(member));
         fragment.setArguments(bundle);
         return fragment;
-    }
-
-      @SuppressLint("CheckResult")
-    private void refreshTable(RecyclerView rv) {
-        mDB.getPeriodRepo().selectById(mMember.getUid())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(periods -> {
-                    Collections.sort(periods, (p1, p2) -> {
-                        if (p1.getYear() > p2.getYear() || p1.getYear() == p2.getYear() && p1.getMonthNum() > p2.getMonthNum()) return 1;
-                        else if (p1.getYear() == p2.getYear() && p1.getMonthNum() == p2.getMonthNum()) return 0;
-                        else return -1;
-                    });
-                    int summ = 0;
-                    for (Period p : periods) {
-                        summ += p.getMoney();
-                    }
-                    String s = String.format("Total: %d", summ);
-                    mTvTotalSumm.setText(s);
-                    mAdapter = new FinancialListAdapter(periods);
-                    rv.setAdapter(mAdapter);
-                });
     }
 
     @SuppressLint("CheckResult")
@@ -159,7 +137,18 @@ public class CurrentMemberFinInfoFragment extends Fragment {
                     }
                     String s = String.format("Total: %d", summ);
                     mTvTotalSumm.setText(s);
-                    mAdapter = new FinancialListAdapter(periods);
+                    mAdapter = new FinancialListAdapter(periods, period -> {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                        builder.setMessage("Are you sure to delete this period?");
+                        builder.setPositiveButton("Delete", (dialog, which) -> {
+                            deletePeriodFromDb(period);
+                        });
+                        builder.setNegativeButton("Cancel", (dialog, which) -> {
+
+                        });
+                        builder.setCancelable(true);
+                        builder.show();
+                    });
                     mRecyclerView.setAdapter(mAdapter);
                 });
     }
@@ -228,5 +217,16 @@ public class CurrentMemberFinInfoFragment extends Fragment {
         });
         builder.setCancelable(true);
         builder.show();
+    }
+
+    @SuppressLint("CheckResult")
+    private void deletePeriodFromDb(Period p) {
+        mDB.getPeriodRepo().delete(p)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> {
+                    Toast.makeText(getContext(), "Period successfully delete!", Toast.LENGTH_LONG).show();
+                    refreshTable();
+                });
     }
 }

@@ -110,6 +110,7 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
     // return refreshed list adapter
     @SuppressLint("CheckResult")
     private MemberListAdapter refreshList() {
+        // Must be refactored to Rx
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         Future<List<Member>> future = executorService.submit(() -> mDB.memberDao().getAllMembers());
         List<Member> memberList = null;
@@ -119,6 +120,7 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
             e.printStackTrace();
         }
         executorService.shutdown();
+
         Collections.sort(memberList, (m1, m2) -> m1.toString().compareToIgnoreCase(m2.toString()));
 
         MemberListAdapter listAdapter = new MemberListAdapter(memberList, m -> {
@@ -136,12 +138,10 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
     private void deleteMemberFromDB(Member m) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setMessage(String.format("Are you shure to delete member %s %s from DB?", m.getLastName(), m.getFirstName()));
-        builder.setPositiveButton(R.string.delete, (dialogInterface, i) -> {
-            mDB.getMemberRepo().delete(m)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(this::refreshList);
-        });
+        builder.setPositiveButton(R.string.delete, (dialogInterface, i) -> mDB.getMemberRepo().delete(m)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::refreshList));
         builder.setNegativeButton("Cancel", (dialogInterface, i) -> {
 
         });
