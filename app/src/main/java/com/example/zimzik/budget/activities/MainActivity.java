@@ -9,7 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.example.zimzik.budget.fragments.DivergenceFragment;
 import com.example.zimzik.budget.fragments.HomeFragment;
 import com.example.zimzik.budget.fragments.MemberListFragment;
-import com.example.zimzik.budget.fragments.RevenuesFragment;
+import com.example.zimzik.budget.fragments.RevenueFragment;
 import com.example.zimzik.budget.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,10 +30,10 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     case R.id.navigation_revenues:
                         setActionBarTitle("Revenues");
-                        setFragment(RevenuesFragment.newInstance(), ft);
+                        setFragment(RevenueFragment.newInstance(), ft);
                         return true;
                     case R.id.navigation_divergence:
-                        setActionBarTitle("Divergence");
+                        setActionBarTitle("DivergenceDao");
                         setFragment(DivergenceFragment.newInstance(), ft);
                         return true;
                 }

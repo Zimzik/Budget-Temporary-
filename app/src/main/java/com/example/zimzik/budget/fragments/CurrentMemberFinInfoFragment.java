@@ -97,25 +97,21 @@ public class CurrentMemberFinInfoFragment extends Fragment {
                 .setNegativeButton("Cancel", null);
         final AlertDialog dialog = builder.create();
         dialog.show();
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mEtMoney.getText().toString().isEmpty()) {
-                    Toast.makeText(getContext(), "Ololo", Toast.LENGTH_LONG).show();
-                    mEtMoney.setError("This field is empty!");
-                } else {
-                    mMoney = Integer.valueOf(mEtMoney.getText().toString());
-                    Period period = new Period(mYear, mMonthNum, mMoney, mMember.getUid());
-                    mDB.getPeriodRepo().insertMonth(period)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(() -> {
-                                Toast.makeText(getContext(), "Information successfully saved on DB", Toast.LENGTH_LONG).show();
-                                mEtMoney.setText("");
-                            }, __ -> ignoreOrUpdate(period));
-                    dialog.dismiss();
-                    refreshTable();
-                }
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
+            if (mEtMoney.getText().toString().isEmpty()) {
+                mEtMoney.setError("This field is empty!");
+            } else {
+                mMoney = Integer.valueOf(mEtMoney.getText().toString());
+                Period period = new Period(mYear, mMonthNum, mMoney, mMember.getUid());
+                mDB.getPeriodRepo().insertMonth(period)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(() -> {
+                            Toast.makeText(getContext(), "Information successfully saved on DB", Toast.LENGTH_LONG).show();
+                            mEtMoney.setText("");
+                        }, __ -> ignoreOrUpdate(period));
+                dialog.dismiss();
+                refreshTable();
             }
         });
     }

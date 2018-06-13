@@ -3,28 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="16dp">
 
     <Button
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
         android:id="@+id/add_money_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/plus_money" />
+        android:text="@string/plus_money"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/ll_table_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/add_money_btn"
-        android:layout_marginTop="16dp">
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/add_money_btn">
 
         <TextView
             style="@style/tableHeadCells"
             android:layout_weight="3"
-            android:text="@string/year"/>
+            android:text="@string/year" />
 
         <TextView
             style="@style/tableHeadCells"
@@ -40,22 +40,25 @@
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
-        app:layout_constraintTop_toBottomOf="@id/ll_table_header"
         android:id="@+id/rv_periods"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:scrollbars="vertical"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager">
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@id/tv_total_summ"
+        app:layout_constraintTop_toBottomOf="@id/ll_table_header">
 
     </android.support.v7.widget.RecyclerView>
 
     <TextView
-        app:layout_constraintTop_toBottomOf="@id/rv_periods"
         android:id="@+id/tv_total_summ"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:paddingLeft="8dp"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp"
         android:textColor="#000"
-        android:textSize="20dp" />
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rv_periods" />
 </android.support.constraint.ConstraintLayout>
