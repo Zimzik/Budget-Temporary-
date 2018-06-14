@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
                         setFragment(RevenueFragment.newInstance(), ft);
                         return true;
                     case R.id.navigation_divergence:
-                        setActionBarTitle("DivergenceDao");
+                        setActionBarTitle("Divergences");
                         setFragment(DivergenceFragment.newInstance(), ft);
                         return true;
                 }

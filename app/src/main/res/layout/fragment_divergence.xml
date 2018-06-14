@@ -8,38 +8,56 @@
     tools:context=".fragments.DivergenceFragment">
 
     <Button
-        android:id="@+id/add_money_btn"
+        android:id="@+id/add_money_btn_div"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/minus_money"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/ll_table_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <TextView
+        style="@style/tableHeadCells"
+        android:text="@string/date"
         android:layout_marginTop="16dp"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/add_money_btn">
+        android:id="@+id/tv_date_header"
+        app:layout_constraintTop_toBottomOf="@id/add_money_btn_div"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="@id/guideline"/>
 
-        <TextView
-            style="@style/tableHeadCells"
-            android:layout_weight="2"
-            android:text="@string/date" />
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.3" />
 
-        <TextView
-            style="@style/tableHeadCells"
-            android:layout_marginStart="1dp"
-            android:layout_weight="4"
-            android:text="@string/description" />
+    <TextView
+        style="@style/tableHeadCells"
+        android:text="@string/description"
+        app:layout_constraintTop_toTopOf="@id/tv_date_header"
+        app:layout_constraintLeft_toLeftOf="@id/guideline"
+        app:layout_constraintRight_toRightOf="@id/guideline2"/>
 
-        <TextView
-            style="@style/tableHeadCells"
-            android:layout_marginStart="1dp"
-            android:layout_weight="3"
-            android:text="@string/money" />
-    </LinearLayout>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.75" />
+
+    <TextView
+        app:layout_constraintTop_toTopOf="@id/tv_date_header"
+        app:layout_constraintLeft_toLeftOf="@id/guideline2"
+        app:layout_constraintRight_toRightOf="parent"
+        style="@style/tableHeadCells"
+        android:text="@string/money" />
+
+    <TextView
+        style="@style/tableHeadCells"
+        android:layout_marginStart="1dp"
+        android:layout_weight="3"
+        android:text="@string/money" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_divergence"
@@ -47,13 +65,13 @@
         android:layout_height="0dp"
         android:scrollbars="vertical"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@id/tv_total_summ"
-        app:layout_constraintTop_toBottomOf="@id/ll_table_header">
+        app:layout_constraintBottom_toTopOf="@id/tv_total_summ_div"
+        app:layout_constraintTop_toBottomOf="@id/tv_date_header">
 
     </android.support.v7.widget.RecyclerView>
 
     <TextView
-        android:id="@+id/tv_total_summ"
+        android:id="@+id/tv_total_summ_div"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -61,6 +79,7 @@
         android:paddingStart="8dp"
         android:textColor="#000"
         android:textSize="20sp"
+        android:layout_marginBottom="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rv_periods" />
 

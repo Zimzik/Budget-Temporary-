@@ -24,25 +24,24 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
+import java.util.Observable;
 
+import io.reactivex.ObservableSource;
+import io.reactivex.Scheduler;
+import io.reactivex.SingleSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
-public class RevenueFragment extends android.support.v4.app.Fragment implements DatePickerDialog.OnDateSetListener {
+public class RevenueFragment extends android.support.v4.app.Fragment {
 
-    private static final String TAG = RevenueFragment.class.getSimpleName();
-    public static final String DATEPICKER_TAG = "datepicker";
-    private DatePickerDialog mDatePickerDialog;
-    private Date mRevenueDate;
     private AppDB mDB;
     private TextView mTvTotalSumm;
     private RevenueListAdapter mAdapter;
     private RecyclerView mRecyclerView;
 
-    // for dialog
-
-    private EditText mEtDescription, mEtMoney;
-    private TextView mTvDate;
+    private AddRevenueDialogFragment mAddRevenueDialogFragment;
 
     public RevenueFragment() {
     }
@@ -56,28 +55,19 @@ public class RevenueFragment extends android.support.v4.app.Fragment implements 
         return fragment;
     }
 
-    @Override
-    public void onDateSet(DatePickerDialog datePickerDialog, int year, int month, int day) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, day);
-        mRevenueDate = calendar.getTime();
-        mTvDate.setText(new SimpleDateFormat("dd/MM/yyy").format(calendar.getTime()));
-    }
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mDB = AppDB.getsInstance(getContext());
-        final Calendar calendar = Calendar.getInstance();
-        mDatePickerDialog = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), isVibrate());
-
-
-        if (savedInstanceState != null) {
-            DatePickerDialog dpd = (DatePickerDialog) getFragmentManager().findFragmentByTag(DATEPICKER_TAG);
-            if (dpd != null) {
-                dpd.setOnDateSetListener(this);
-            }
-        }
+        mAddRevenueDialogFragment = AddRevenueDialogFragment.newInstance(revenue -> mDB.getRevenueRepo().insertRevenue(revenue)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> {
+                    Toast.makeText(getContext(), "Revenue successfully saved!", Toast.LENGTH_LONG).show();
+                    refreshTable();
+                }));
     }
 
     @Nullable
@@ -95,56 +85,7 @@ public class RevenueFragment extends android.support.v4.app.Fragment implements 
 
     @SuppressLint("CheckResult")
     private void addMoneyButtonClick() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setView(setDialogView())
-                .setMessage("Add new revenue")
-                .setPositiveButton(R.string.save, (dialog, which) -> {})
-                .setNegativeButton("Cancel", null);
-        final AlertDialog dialog = builder.create();
-        dialog.show();
-
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
-            mTvDate.setError(null);
-            mEtDescription.setError(null);
-            mEtMoney.setError(null);
-            if (mTvDate.getText().toString().isEmpty() || mEtDescription.getText().toString().isEmpty() || mEtMoney.getText().toString().isEmpty() ) {
-                if (mTvDate.getText().toString().isEmpty()) {
-                    mTvDate.setError("This field is empty!");
-                }
-                if (mEtDescription.getText().toString().isEmpty()) {
-                    mEtDescription.setError("This field is empty!");
-                }
-                if (mEtMoney.getText().toString().isEmpty()) {
-                    mEtMoney.setError("This field is empty!");
-                }
-            } else {
-                Revenue revenue = new Revenue(mRevenueDate.getTime(), mEtDescription.getText().toString(), Integer.valueOf(mEtMoney.getText().toString()));
-                mDB.getRevenueRepo().insertRevenue(revenue)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(() -> {
-                            Toast.makeText(getContext(), "Revenue successfully saved!", Toast.LENGTH_LONG).show();
-                            refreshTable();
-                        });
-                dialog.dismiss();
-            }
-        });
-    }
-
-    private View setDialogView() {
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.dialog_add_new_revenue, null);
-        mTvDate = view.findViewById(R.id.tv_rev_date);
-        mEtDescription = view.findViewById(R.id.et_rev_descr);
-        mEtMoney = view.findViewById(R.id.et_rev_money);
-
-        mTvDate.setOnClickListener(v -> {
-            mDatePickerDialog.setVibrate(isVibrate());
-            mDatePickerDialog.setYearRange(1985, 2028);
-            mDatePickerDialog.setCloseOnSingleTapDay(false);
-            mDatePickerDialog.show(getFragmentManager(), DATEPICKER_TAG);
-        });
-        return view;
+        mAddRevenueDialogFragment.show(getFragmentManager(), "AddRevenueDialog");
     }
 
     @SuppressLint("CheckResult")

@@ -1,25 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
     <TextView
         android:id="@+id/tv_revenues_date"
+        style="@style/tablecCells"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="@id/guideline" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="18"/>
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.3" />
+
 
     <TextView
         android:id="@+id/tv_revenues_description"
+        style="@style/tablecCells"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@id/guideline"
+        app:layout_constraintRight_toRightOf="@id/guideline2" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="35"/>
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.75" />
 
     <TextView
         android:id="@+id/tv_revenues_money"
-        android:layout_width="wrap_content"
+        style="@style/tablecCells"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="25"/>
+        android:layout_weight="25"
+        app:layout_constraintLeft_toRightOf="@id/guideline2"
+        app:layout_constraintRight_toRightOf="parent" />
 
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

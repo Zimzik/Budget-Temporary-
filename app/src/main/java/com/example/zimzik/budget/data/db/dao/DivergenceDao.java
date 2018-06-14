@@ -8,6 +8,8 @@ import android.arch.persistence.room.Query;
 
 import com.example.zimzik.budget.data.db.models.Divergence;
 
+import java.util.List;
+
 import io.reactivex.Single;
 
 @Dao
@@ -22,5 +24,5 @@ public interface DivergenceDao {
     void delete(Divergence divergence);
 
     @Query("SELECT * FROM Divergence")
-    Single<Divergence> getAll();
+    Single<List<Divergence>> getAll();
 }

@@ -13,31 +13,42 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/ll_table_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <TextView
+        android:id="@+id/tv_date_header"
+        app:layout_constraintTop_toBottomOf="@id/add_money_btn"
         android:layout_marginTop="16dp"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/add_money_btn">
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="@+id/guideline"
+        style="@style/tableHeadCells"
+        android:text="@string/year" />
 
-        <TextView
-            style="@style/tableHeadCells"
-            android:layout_weight="3"
-            android:text="@string/year" />
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.3" />
 
-        <TextView
-            style="@style/tableHeadCells"
-            android:layout_marginStart="1dp"
-            android:layout_weight="4"
-            android:text="@string/month" />
+    <TextView
+        style="@style/tableHeadCells"
+        app:layout_constraintTop_toTopOf="@id/tv_date_header"
+        app:layout_constraintLeft_toLeftOf="@id/guideline"
+        app:layout_constraintRight_toRightOf="@id/guideline2"
+        android:text="@string/month" />
 
-        <TextView
-            style="@style/tableHeadCells"
-            android:layout_marginStart="1dp"
-            android:layout_weight="3"
-            android:text="@string/money" />
-    </LinearLayout>
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.7" />
+
+    <TextView
+        style="@style/tableHeadCells"
+        app:layout_constraintTop_toTopOf="@id/tv_date_header"
+        app:layout_constraintLeft_toLeftOf="@id/guideline2"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="@string/money" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_periods"
@@ -46,7 +57,7 @@
         android:scrollbars="vertical"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/tv_total_summ"
-        app:layout_constraintTop_toBottomOf="@id/ll_table_header">
+        app:layout_constraintTop_toBottomOf="@id/tv_date_header">
 
     </android.support.v7.widget.RecyclerView>
 

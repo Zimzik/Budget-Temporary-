@@ -3,6 +3,8 @@ package com.example.zimzik.budget.data.db.repo;
 import com.example.zimzik.budget.data.db.dao.DivergenceDao;
 import com.example.zimzik.budget.data.db.models.Divergence;
 
+import java.util.List;
+
 import io.reactivex.Completable;
 import io.reactivex.Single;
 
@@ -25,7 +27,7 @@ public class DivergenceRepo {
         return Completable.fromAction(() -> mDivergenceDao.delete(divergence));
     }
 
-    public Single<Divergence> getAll() {
+    public Single<List<Divergence>> getAll() {
         return mDivergenceDao.getAll();
     }
 }

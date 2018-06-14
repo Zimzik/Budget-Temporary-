@@ -11,7 +11,7 @@ public class Divergence {
     private int summ;
     private long date;
 
-    public Divergence(String description, int summ, long date) {
+    public Divergence(long date, String description, int summ) {
         this.description = description;
         this.summ = summ;
         this.date = date;
